@@ -12,6 +12,7 @@ Through this project, I can study the JAM stack.
 ### Dependencies
 * Typescript
 * Styled Components
+* React Router Dom
 
 ## Spec
 * Gatsby

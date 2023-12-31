@@ -1,18 +1,12 @@
-import styled from "styled-components";
-
-const Container = styled.div`
-  background-color: ${(props) => props.theme.bgColor};
-`;
-
-const Title = styled.h1`
-  color: ${(props) => props.theme.textColor};
-`;
+import Header from "./components/Header.tsx";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <Container>
-      <Title>Hello World!</Title>
-    </Container>
+    <div>
+      <Header />
+      <Outlet />
+    </div>
   );
 }
 
