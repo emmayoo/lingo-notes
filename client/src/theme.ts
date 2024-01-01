@@ -1,4 +1,4 @@
-import { DefaultTheme } from "styled-components/dist/types.js";
+import { DefaultTheme } from "styled-components";
 
 export const lightTheme: DefaultTheme = {
   bgColor: "white",

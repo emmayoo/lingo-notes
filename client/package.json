@@ -18,7 +18,7 @@
     "typescript": "^5.3.3",
     "web-vitals": "^2.1.4"
   },
-  "_comment":{
+  "_comment": {
     "reference of overrides": "https://github.com/facebook/create-react-app/issues/13080"
   },
   "overrides": {
