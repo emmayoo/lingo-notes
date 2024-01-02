@@ -13,9 +13,10 @@ Through this project, I can study the JAM stack.
 * Typescript
 * Styled Components
 * React Router Dom
+* React Query
 
 ## Spec
-* Gatsby
+* React
 * Notion API
 
 ## Reference

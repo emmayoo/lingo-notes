@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchList } from "../api.ts";
 
 type Item = {
   id: string;
@@ -9,21 +10,22 @@ type Item = {
 };
 
 const Home = () => {
-  const [list, setList] = useState<Item[]>([]);
-  useEffect(() => {
-    (async () => {
-      const data = await (await fetch("http://localhost:8080")).json();
-      setList(data);
-    })();
-  }, []);
+  const { data, isLoading } = useQuery<Item[]>({
+    queryKey: ["list"],
+    queryFn: fetchList,
+  });
   return (
     <div>
       <h1>List</h1>
-      <ul>
-        {list.map((row) => (
-          <li key={row.id}>{row.sentence}</li>
-        ))}
-      </ul>
+      {isLoading ? (
+        <>Loading</>
+      ) : (
+        <ul>
+          {data?.map((row) => (
+            <li key={row.id}>{row.sentence}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
