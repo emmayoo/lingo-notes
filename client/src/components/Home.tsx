@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchList } from "../api.ts";
+import { Link } from "react-router-dom";
 
 type Item = {
   id: string;
@@ -22,7 +23,9 @@ const Home = () => {
       ) : (
         <ul>
           {data?.map((row) => (
-            <li key={row.id}>{row.sentence}</li>
+            <li key={row.id}>
+              <Link to={`/${row.id}`}>{row.sentence}</Link>
+            </li>
           ))}
         </ul>
       )}

@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import Home from "./components/Home.tsx";
-import About from "./components/About.tsx";
+import Item from "./components/Item.tsx";
+import Quiz from "./components/quiz/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -13,8 +14,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "about",
-        element: <About />,
+        path: "/:id",
+        element: <Item />,
+      },
+      {
+        path: "/quiz",
+        element: <Quiz />,
       },
     ],
   },

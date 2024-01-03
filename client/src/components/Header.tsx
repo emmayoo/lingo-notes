@@ -5,10 +5,10 @@ function Header() {
     <header>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">List</Link>
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <Link to="/quiz">Quiz</Link>
         </li>
       </ul>
     </header>
