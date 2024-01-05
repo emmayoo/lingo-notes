@@ -6,7 +6,8 @@ import { PartialDatabaseObjectResponse } from "@notionhq/client/build/src/api-en
 type List = {
   id: string;
   sentence: string;
-  description: string;
+  translate: string;
+  lang: string;
   date: string | null;
   link: string | null;
 };
@@ -44,7 +45,8 @@ const server = http.createServer(async (req, res) => {
         return {
           id: row.id,
           sentence: row.properties.sentence.title[0].plain_text,
-          description: row.properties.description.rich_text[0].plain_text,
+          translate: row.properties.translate.rich_text[0].plain_text,
+          lang: row.properties.lang.select.name || "en",
           date: row.properties.date.date.start || null,
           link: row.properties.link.url || null,
         };
