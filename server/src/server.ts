@@ -1,7 +1,11 @@
 require("dotenv").config();
 import http from "http";
 import { Client } from "@notionhq/client";
-import { PartialDatabaseObjectResponse } from "@notionhq/client/build/src/api-endpoints.js";
+import querystring from "node:querystring";
+import {
+  ParagraphBlockObjectResponse,
+  RichTextItemResponse,
+} from "@notionhq/client/build/src/api-endpoints.js";
 
 type List = {
   id: string;
@@ -34,8 +38,20 @@ const port = 8080;
 const server = http.createServer(async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
-  switch (req.url) {
-    case "/":
+  const url = req.url;
+  let num;
+  if (!url) {
+    res.setHeader("Content-Type", "application/json");
+    res.writeHead(404);
+    res.end(JSON.stringify({ error: "Resource not found" }));
+    return;
+  }
+
+  if (url.includes("/list")) num = 1;
+  else if (url.includes("/item")) num = 2;
+
+  switch (num) {
+    case 1:
       const query = await notion.databases.query({
         database_id: notionDatabaseId,
       });
@@ -56,11 +72,27 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200);
       res.end(JSON.stringify(list));
       break;
+    case 2:
+      const params = querystring.decode(req.url!.replace("/item?", ""));
 
-    default:
+      const { results } = await notion.blocks.children.list({
+        block_id: params.id as string,
+        page_size: 100,
+      });
+
+      const paragraph = (results[0] as ParagraphBlockObjectResponse)
+        ?.paragraph ?? { rich_text: [] };
+
+      const texts = paragraph.rich_text;
+      const content: string = texts.reduce(
+        (acc: string, cur: RichTextItemResponse) => acc + cur.plain_text,
+        ""
+      );
+
       res.setHeader("Content-Type", "application/json");
-      res.writeHead(404);
-      res.end(JSON.stringify({ error: "Resource not found" }));
+      res.writeHead(200);
+      res.end(JSON.stringify({ content }));
+      break;
   }
 });
 
