@@ -33,7 +33,7 @@ const Home = () => {
         <ul>
           {data?.map((row) => (
             <li key={row.id}>
-              <Link to={`/${row.id}`}>
+              <Link to={`/${row.id}`} state={{ data: row }}>
                 <ItemBox>
                   <div>{row.sentence}</div>
                   <div>{row.translate}</div>

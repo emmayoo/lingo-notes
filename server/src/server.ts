@@ -3,8 +3,9 @@ import http from "http";
 import { Client } from "@notionhq/client";
 import querystring from "node:querystring";
 import {
+  BlockObjectResponse,
   ParagraphBlockObjectResponse,
-  RichTextItemResponse,
+  PartialBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints.js";
 
 type List = {
@@ -80,12 +81,15 @@ const server = http.createServer(async (req, res) => {
         page_size: 100,
       });
 
-      const paragraph = (results[0] as ParagraphBlockObjectResponse)
-        ?.paragraph ?? { rich_text: [] };
-
-      const texts = paragraph.rich_text;
-      const content: string = texts.reduce(
-        (acc: string, cur: RichTextItemResponse) => acc + cur.plain_text,
+      const content = results.reduce(
+        (
+          acc: string,
+          cur: PartialBlockObjectResponse | BlockObjectResponse
+        ) => {
+          let currentValue = (cur as ParagraphBlockObjectResponse)?.paragraph
+            ?.rich_text[0]?.plain_text;
+          return acc + (currentValue ?? "") + "\n";
+        },
         ""
       );
 
