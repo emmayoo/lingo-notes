@@ -2,15 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchList } from "../api.ts";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-type Item = {
-  id: string;
-  sentence: string;
-  translate: string;
-  lang: string;
-  date: string;
-  link: string;
-};
+import useBearStore, { ItemType } from "../store.ts";
 
 const ItemBox = styled.div`
   padding: 0.25em 1em;
@@ -20,10 +12,17 @@ const ItemBox = styled.div`
 `;
 
 const Home = () => {
-  const { data, isLoading } = useQuery<Item[]>({
+  const { data, isLoading, isSuccess } = useQuery<ItemType[]>({
     queryKey: ["list"],
     queryFn: fetchList,
   });
+
+  const { setList } = useBearStore((state) => state.actions);
+
+  if (isSuccess) {
+    setList(data);
+  }
+
   return (
     <div>
       <h1>List</h1>

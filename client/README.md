@@ -14,6 +14,7 @@ Through this project, I can study the JAM stack.
 * Styled Components
 * React Router Dom
 * React Query
+* zustand
 
 ## Spec
 * React

@@ -18,7 +18,8 @@
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.6",
     "typescript": "^5.3.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.4.7"
   },
   "_comment": {
     "reference of overrides": "https://github.com/facebook/create-react-app/issues/13080"
