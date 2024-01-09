@@ -15,25 +15,25 @@ type ItemCommentType = {
 
 interface BearState {
   list: ItemType[];
-  commentById: ItemCommentType;
+  contentById: ItemCommentType;
   actions: {
     setList: (list: ItemType[]) => void;
-    setCommentById: (id: string, comment: string) => void;
+    setContentById: (id: string, comment: string) => void;
   };
 }
 
 const useBearStore = create<BearState>()((set) => ({
   list: [],
-  commentById: {},
+  contentById: {},
   actions: {
     setList: (list) => set((state) => ({ ...state, list })),
-    setCommentById: (id, comment) =>
+    setContentById: (id, comment) =>
       set((state) => {
-        const old = state.commentById[id];
+        const old = state.contentById[id];
         if (!old)
           return {
             list: { ...state.list },
-            commentById: { ...state.commentById, [id]: comment },
+            contentById: { ...state.contentById, [id]: comment },
           };
         return state;
       }),
